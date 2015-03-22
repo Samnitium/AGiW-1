@@ -40,7 +40,7 @@ public class ReadS3Bucket {
 
           WarcRecord thisWarcRecord;
           while ((thisWarcRecord = WarcRecord.readNextWarcRecord(inStream)) != null) {
-            System.out.println("-- thisWarcRecord.getHeaderRecordType() = " + thisWarcRecord.getHeaderRecordType());
+            //System.out.println("-- thisWarcRecord.getHeaderRecordType() = " + thisWarcRecord.getHeaderRecordType());
             if (thisWarcRecord.getHeaderRecordType().equals("response")) {
               WarcHTMLResponseRecord htmlRecord = new WarcHTMLResponseRecord(thisWarcRecord);
               String thisTargetURI = htmlRecord.getTargetURI();
@@ -64,6 +64,6 @@ public class ReadS3Bucket {
 
   static public void main(String[] args) {
     AmazonS3Client s3 = new AmazonS3Client();
-    process(s3, "aws-publicdatasets", "common-crawl/crawl-data/CC-MAIN-2013-48", 20);
+    process(s3, "aws-publicdatasets", "common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00000-ip-10-180-136-8.ec2.internal.warc.gz", 20);
   }
 }

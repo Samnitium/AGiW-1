@@ -6,7 +6,6 @@ import java.util.Collection;
 
 import org.apache.solr.client.solrj.*;
 import org.apache.solr.client.solrj.impl.*;
-import org.apache.solr.client.solrj.response.*;
 import org.apache.solr.common.SolrInputDocument;
 
 public class SolrInsertText {
