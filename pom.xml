@@ -37,5 +37,15 @@
   		<artifactId>lucene-demo</artifactId>
   		<version>5.0.0</version>
   	</dependency>
+  	<dependency>
+  		<groupId>com.digitalpebble.behemoth</groupId>
+  		<artifactId>behemoth-io</artifactId>
+  		<version>1.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.amazonaws</groupId>
+  		<artifactId>aws-java-sdk</artifactId>
+  		<version>1.0.002</version>
+  	</dependency>
   </dependencies>
 </project>
