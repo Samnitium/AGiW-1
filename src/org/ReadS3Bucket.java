@@ -32,7 +32,7 @@ public class ReadS3Bucket {
       for (S3ObjectSummary summary : summaries) {
         try {
           String key = summary.getKey();
-          System.out.println("+ key: " + key);
+          //System.out.println("+ key: " + key);
           S3Object object = s3.getObject(new GetObjectRequest(bucketName, key));
           InputStream objectData = object.getObjectContent();
           GZIPInputStream gzInputStream=new GZIPInputStream(objectData);
@@ -40,7 +40,7 @@ public class ReadS3Bucket {
 
           WarcRecord thisWarcRecord;
           while ((thisWarcRecord = WarcRecord.readNextWarcRecord(inStream)) != null) {
-            //System.out.println("-- thisWarcRecord.getHeaderRecordType() = " + thisWarcRecord.getHeaderRecordType());
+            System.out.println("-- thisWarcRecord.getHeaderRecordType() = " + thisWarcRecord.getHeaderRecordType());
             if (thisWarcRecord.getHeaderRecordType().equals("response")) {
               WarcHTMLResponseRecord htmlRecord = new WarcHTMLResponseRecord(thisWarcRecord);
               String thisTargetURI = htmlRecord.getTargetURI();
@@ -51,7 +51,7 @@ public class ReadS3Bucket {
           }
           inStream.close();
         } catch (Exception ex) {
-          ex.printStackTrace();
+          //ex.printStackTrace();
         }
         if (++count >= max) return;
       }
