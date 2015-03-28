@@ -27,14 +27,18 @@ public class SampleProcessWarcRecord implements IProcessWarcRecord {
 	// Get back the string of the body.
 	String words = doc.body().html();
 	
+	
     System.out.println("url: " + url);
 	System.out.println(words);
 	System.out.println();
+	SolrInsertDoc.insert(url, words);
     //System.out.println("content: " + url + "\n\n" + content + "\n");
   }
 
   @Override
   public void done() {
+	  SolrInsertDoc.commit_optimize();
+	  System.out.println("FATTO");
     // place any code hear to save data, etc.
   }
 }

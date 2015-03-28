@@ -16,12 +16,12 @@ public class ReadWARC {
     // use a callback class for handling WARC record data:
     IProcessWarcRecord processor = new SampleProcessWarcRecord();
 
-    String inputWarcFile="/ClueWeb09_English_Sample.warc.gz";
+    String inputWarcFile="/00.warc.gz";
     GZIPInputStream gzInputStream=new GZIPInputStream(new FileInputStream(inputWarcFile));
     DataInputStream inStream=new DataInputStream(gzInputStream);
 
     WarcRecord thisWarcRecord;
-    while ((thisWarcRecord=WarcRecord.readNextWarcRecord(inStream))!=null) {
+   while ((thisWarcRecord=WarcRecord.readNextWarcRecord(inStream))!=null) {
       System.out.println("%% thisWarcRecord.getHeaderRecordType() = " + thisWarcRecord.getHeaderRecordType());
       if (thisWarcRecord.getHeaderRecordType().equals("response")) {
         WarcHTMLResponseRecord htmlRecord=new WarcHTMLResponseRecord(thisWarcRecord);
