@@ -107,6 +107,7 @@
    <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
    <field name="content" type="text_general" indexed="true" stored="true" required="true"/> 
    <field name="warc_data" type="date" indexed="false" stored="true" required="true"/> 
+   <field name="title" type="text_general" indexed="true" stored="true" required="true"/> 
    <field name="site" type="string" indexed="true" stored="false"/> 
 
    <!-- Dynamic field definitions allow using convention over configuration

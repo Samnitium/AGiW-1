@@ -19,6 +19,7 @@ public class SampleProcessWarcRecord implements IProcessWarcRecord {
 	 //String body = content.substring(content.indexOf("<body>") + 6, content.indexOf("</body"));
 	  String body = content.substring(content.indexOf("<") + 1);
 	  Document doc = Jsoup.parse(body);
+	  String title = doc.title();
 ;
 	// Clean the document.
 	doc = new Cleaner(Whitelist.none()).clean(doc);
@@ -33,7 +34,7 @@ public class SampleProcessWarcRecord implements IProcessWarcRecord {
     System.out.println("url: " + url);
 	System.out.println(words);
 	System.out.println();
-	SolrInsertDoc.insert(url, words, warc_data);
+	SolrInsertDoc.insert(url, words, warc_data, title);
     //System.out.println("content: " + url + "\n\n" + content + "\n");
   }
 

@@ -10,7 +10,7 @@ import org.apache.solr.common.SolrInputDocument;
 
 public class SolrInsertDoc {
 
-	public static void insert(String url, String content, String warc_data) {
+	public static void insert(String url, String content, String warc_data, String title) {
 		String solr_url = "http://localhost:8983/solr/new_core";
 		HttpSolrServer server = new HttpSolrServer( solr_url );
 		Collection<SolrInputDocument> docs = new ArrayList<SolrInputDocument>();
@@ -20,6 +20,7 @@ public class SolrInsertDoc {
 		doc.addField("content", content);
 		//doc.addField("warc_data", "2009-03-65T08:43:19Z");
 		doc.addField("warc_data", warc_data);
+		doc.addField("title", title);
 		docs.add(doc);
 
 		try {
