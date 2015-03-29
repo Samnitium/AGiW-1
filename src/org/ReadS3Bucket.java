@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+
 import edu.cmu.lemurproject.WarcHTMLResponseRecord;
 import edu.cmu.lemurproject.WarcRecord;
 
@@ -46,8 +47,10 @@ public class ReadS3Bucket {
               WarcHTMLResponseRecord htmlRecord = new WarcHTMLResponseRecord(thisWarcRecord);
               String thisTargetURI = htmlRecord.getTargetURI();
               String thisContentUtf8 = htmlRecord.getRawRecord().getContentUTF8();
+              String warc_data = htmlRecord.getRawRecord().getHeaderMetadataItem("WARC-Date").substring(0, 19).concat("Z");
+              System.out.println("Data= "+warc_data);
               // handle WARC record content:
-              processor.process(thisTargetURI, thisContentUtf8);
+              processor.process(thisTargetURI, thisContentUtf8, warc_data);
             }
           }
           inStream.close();
@@ -67,7 +70,7 @@ public class ReadS3Bucket {
     AmazonS3Client s3 = new AmazonS3Client();
     //process(s3, "aws-publicdatasets", "common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00000-ip-10-180-136-8.ec2.internal.warc.gz", 20);
     ReadS3Bucket.process(s3, "aws-publicdatasets", "common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00000-ip-10-180-136-8.ec2.internal.warc.gz", 20);
-    ReadS3Bucket.process(s3, "aws-publicdatasets", "common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00001-ip-10-180-136-8.ec2.internal.warc.gz", 20);
+   /* ReadS3Bucket.process(s3, "aws-publicdatasets", "common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00001-ip-10-180-136-8.ec2.internal.warc.gz", 20);
     ReadS3Bucket.process(s3, "aws-publicdatasets", "common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00002-ip-10-180-136-8.ec2.internal.warc.gz", 20);
     ReadS3Bucket.process(s3, "aws-publicdatasets", "common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00003-ip-10-180-136-8.ec2.internal.warc.gz", 20);
     ReadS3Bucket.process(s3, "aws-publicdatasets", "common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00004-ip-10-180-136-8.ec2.internal.warc.gz", 20);
@@ -75,6 +78,6 @@ public class ReadS3Bucket {
     ReadS3Bucket.process(s3, "aws-publicdatasets", "common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00006-ip-10-180-136-8.ec2.internal.warc.gz", 20);
     ReadS3Bucket.process(s3, "aws-publicdatasets", "common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00007-ip-10-180-136-8.ec2.internal.warc.gz", 20);
     ReadS3Bucket.process(s3, "aws-publicdatasets", "common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00008-ip-10-180-136-8.ec2.internal.warc.gz", 20);
-    ReadS3Bucket.process(s3, "aws-publicdatasets", "common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00009-ip-10-180-136-8.ec2.internal.warc.gz", 20);
+    ReadS3Bucket.process(s3, "aws-publicdatasets", "common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00009-ip-10-180-136-8.ec2.internal.warc.gz", 20);*/
   }
 }

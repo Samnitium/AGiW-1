@@ -15,8 +15,10 @@ import org.jsoup.safety.Whitelist;
  */
 public class SampleProcessWarcRecord implements IProcessWarcRecord {
   @Override
-  public void process(String url, String content) {
-	Document doc = Jsoup.parse(content);
+  public void process(String url, String content, String warc_data) {
+	 //String body = content.substring(content.indexOf("<body>") + 6, content.indexOf("</body"));
+	  String body = content.substring(content.indexOf("<") + 1);
+	  Document doc = Jsoup.parse(body);
 ;
 	// Clean the document.
 	doc = new Cleaner(Whitelist.none()).clean(doc);
@@ -31,7 +33,7 @@ public class SampleProcessWarcRecord implements IProcessWarcRecord {
     System.out.println("url: " + url);
 	System.out.println(words);
 	System.out.println();
-	SolrInsertDoc.insert(url, words);
+	SolrInsertDoc.insert(url, words, warc_data);
     //System.out.println("content: " + url + "\n\n" + content + "\n");
   }
 

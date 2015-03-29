@@ -27,9 +27,10 @@ public class ReadWARC {
         WarcHTMLResponseRecord htmlRecord=new WarcHTMLResponseRecord(thisWarcRecord);
         String thisTargetURI=htmlRecord.getTargetURI();
         String thisContentUtf8 = htmlRecord.getRawRecord().getContentUTF8();
-
+        String warc_data = htmlRecord.getRawRecord().getHeaderMetadataItem("WARC-Date").substring(0, 19).concat("Z");
+        System.out.println("Data= "+warc_data);
         // handle WARC record content:
-        processor.process(thisTargetURI, thisContentUtf8);
+        processor.process(thisTargetURI, thisContentUtf8, warc_data);
       }
     }
     inStream.close();
