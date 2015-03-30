@@ -20,7 +20,6 @@ public class SampleProcessWarcRecord implements IProcessWarcRecord {
 	  String body = content.substring(content.indexOf("<") + 1);
 	  Document doc = Jsoup.parse(body);
 	  String title = doc.title();
-;
 	// Clean the document.
 	doc = new Cleaner(Whitelist.none()).clean(doc);
 

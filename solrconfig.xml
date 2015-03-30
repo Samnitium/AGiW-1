@@ -417,6 +417,87 @@
        of SearchComponents (see below) and supports distributed
        queries across multiple shards
     -->
+  <searchComponent name="spellcheck" class="solr.SpellCheckComponent">
+  <lst name="spellchecker">
+    <str name="classname">solr.IndexBasedSpellChecker</str>
+    <str name="spellcheckIndexDir">./spellchecker</str>
+    <str name="field">content_anal</str>
+    <str name="buildOnCommit">true</str>
+  </lst>
+</searchComponent>
+
+<requestHandler name="/spell" class="solr.SearchHandler">
+  <lst name="defaults">
+  <str name="spellcheck">true</str>
+  <str name="spellcheck.onlyMorePopular">true</str>
+    <str name="spellcheck.dictionary">default</str>
+    <str name="spellcheck.count">20</str>
+
+  </lst>
+  <arr name="last-components">
+    <str>spellcheck</str>
+  </arr>
+</requestHandler>
+<!--
+<searchComponent name="suggest" class="solr.SuggestComponent">
+   <lst name="suggester">
+      <str name="name">mySuggester</str>
+      <str name="lookupImpl">FuzzyLookupFactory</str>
+      <str name="dictionaryImpl">DocumentDictionaryFactory</str>
+      <str name="field">content</str>
+      <str name="suggestAnalyzerFieldType">string</str>
+   </lst>
+</searchComponent>
+
+<requestHandler name="/suggest" class="solr.SearchHandler" startup="lazy">
+  <lst name="defaults">
+    <str name="suggest">true</str>
+    <str name="suggest.count">10</str>
+  </lst>
+  <arr name="components">
+    <str>suggest</str>
+  </arr>
+</requestHandler>
+-->
+
+ <searchComponent class="solr.SpellCheckComponent" name="suggest">
+    <lst name="spellchecker">
+      <str name="name">suggest</str>
+      <str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+      <str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookupFactory</str>
+      <!-- Alternatives to lookupImpl: 
+           org.apache.solr.spelling.suggest.fst.FSTLookupFactory   [finite state automaton]
+           org.apache.solr.spelling.suggest.fst.WFSTLookupFactory [weighted finite state automaton]
+           org.apache.solr.spelling.suggest.jaspell.JaspellLookupFactory [default, jaspell-based]
+           org.apache.solr.spelling.suggest.tst.TSTLookupFactory   [ternary trees]
+      -->
+      <str name="field">content_anal</str>  <!-- the indexed field to derive suggestions from -->
+      <!--<float name="threshold">0.005</float>-->
+      <str name="buildOnCommit">true</str>
+<!--
+      <str name="sourceLocation">american-english</str>
+-->
+    </lst>
+  </searchComponent>
+
+  
+  <requestHandler name="/suggest" class="org.apache.solr.handler.component.SearchHandler" >
+    <lst name="defaults">
+      <str name="spellcheck">true</str>
+      <str name="spellcheck.dictionary">suggest</str>
+      <str name="spellcheck.count">50</str>
+      <str name="spellcheck.onlyMorePopular">true</str>
+      <!--<str name="spellcheck.collate">true</str>-->
+    </lst>
+    <arr name="components">
+      <str>suggest</str>
+    </arr>
+  </requestHandler>
+
+
+
+
+
   <requestHandler name="/select" class="solr.SearchHandler">
     <!-- default values for query parameters can be specified, these
          will be overridden by parameters in the request
@@ -424,6 +505,7 @@
      <lst name="defaults">
        <str name="echoParams">explicit</str>
        <int name="rows">10</int>
+       <str name="df">content</str>
      </lst>
 
     </requestHandler>
@@ -434,7 +516,8 @@
        <str name="echoParams">explicit</str>
        <str name="wt">json</str>
        <str name="indent">true</str>
-       <str name="df">text</str>
+       <str name="df">content</str>
+       <str name="spellcheck">true</str>
      </lst>
   </requestHandler>
 

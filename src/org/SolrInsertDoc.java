@@ -40,6 +40,7 @@ public class SolrInsertDoc {
 		//	server.add(docs);
 			server.commit();
 			server.optimize();
+			System.out.println("FATTOOOOOOO");
 		} catch (IOException | SolrServerException e) {
 			e.printStackTrace();
 		}
