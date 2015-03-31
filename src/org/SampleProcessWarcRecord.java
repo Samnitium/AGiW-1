@@ -1,10 +1,14 @@
 package org;
 
+import java.util.List;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Entities.EscapeMode;
 import org.jsoup.safety.Cleaner;
 import org.jsoup.safety.Whitelist;
+import org.jsoup.select.Elements;
 
 /**
  * author: Mark Watson
@@ -20,6 +24,18 @@ public class SampleProcessWarcRecord implements IProcessWarcRecord {
 	  String body = content.substring(content.indexOf("<") + 1);
 	  Document doc = Jsoup.parse(body);
 	  String title = doc.title();
+	  
+	 //estrazione immagini
+	  /*
+      Elements media = doc.select("[src]");
+      List<String> images = null;
+      for (Element src : media) {
+          if (src.tagName().equals("img"))
+              images.add(src.attr("abs:src"));
+      }
+      */
+      
+      
 	// Clean the document.
 	doc = new Cleaner(Whitelist.none()).clean(doc);
 
@@ -34,6 +50,7 @@ public class SampleProcessWarcRecord implements IProcessWarcRecord {
 	System.out.println(words);
 	System.out.println();
 	SolrInsertDoc.insert(url, words, warc_data, title);
+	//SolrInsertDoc.insert(url, words, warc_data, title, images);
     //System.out.println("content: " + url + "\n\n" + content + "\n");
   }
 
